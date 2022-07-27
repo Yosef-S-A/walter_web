@@ -1,10 +1,13 @@
 <template>
-  <q-scroll-area
-    horizontal
-    style="height: 36px; width: 100%"
-    class="q-mt-md q-mx-md"
-  >
-    <div v-if="editor">
+  <div class="editor q-ma-md rounded-borders">
+    <div class="editor_header" v-if="editor">
+      <q-btn
+        @click="editor.chain().focus().toggleBold().run()"
+        :class="{ 'is-active': editor.isActive('bold') }"
+        icon="mdi-format-bold"
+        flat
+        round
+      ></q-btn>
       <button
         @click="editor.chain().focus().toggleBold().run()"
         :class="{ 'is-active': editor.isActive('bold') }"
@@ -110,8 +113,11 @@
       <button @click="editor.chain().focus().undo().run()">undo</button>
       <button @click="editor.chain().focus().redo().run()">redo</button>
     </div>
-  </q-scroll-area>
-  <editor-content :editor="editor" class="q-mx-md" />
+    <div class="editor_content">
+      <editor-content :editor="editor" />
+    </div>
+    <div class="editor_footer"></div>
+  </div>
 </template>
 
 <script>
