@@ -3,7 +3,7 @@
     <editor v-model="content" />
 
     <div class="content">
-      <h3>Content</h3>
+      <h3 class="text-3xl">Content</h3>
       <pre><code>{{ content }}</code></pre>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-10 q-pa-md editor_div">
+  <div class="col-10 q-pa-md q-mx-md editor_div">
     <div class="editor_header" v-if="editor">
       <q-btn
         @click="editor.chain().focus().toggleBold().run()"
@@ -157,9 +157,7 @@
       </q-btn>
     </div>
 
-    <q-separator color="orange"></q-separator>
-
-    <div class="editor_content border">
+    <div class="editor_content">
       <editor-content :editor="editor" />
     </div>
     <div class="editor_footer"></div>
@@ -218,8 +216,11 @@ export default {
 
 <style>
 .editor_header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #c4c4c4;
+}
+.ProseMirror {
+  border: solid 1px #eeeeee;
+  border-radius: 0 0 6px 6px;
+  height: 350px;
 }
 </style>
