@@ -1,5 +1,5 @@
 <template>
-  <div class="editor q-ma-md rounded-borders">
+  <div class="col-10 q-pa-md editor_div">
     <div class="editor_header" v-if="editor">
       <q-btn
         @click="editor.chain().focus().toggleBold().run()"
@@ -8,112 +8,158 @@
         flat
         round
       ></q-btn>
-      <button
-        @click="editor.chain().focus().toggleBold().run()"
-        :class="{ 'is-active': editor.isActive('bold') }"
-      >
-        bold
-      </button>
-      <button
+      <q-btn
         @click="editor.chain().focus().toggleItalic().run()"
         :class="{ 'is-active': editor.isActive('italic') }"
+        icon="mdi-format-italic"
+        flat
+        round
       >
-        italic
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleStrike().run()"
         :class="{ 'is-active': editor.isActive('strike') }"
+        icon="mdi-format-strikethrough"
+        flat
+        round
       >
-        strike
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleCode().run()"
         :class="{ 'is-active': editor.isActive('code') }"
+        icon="mdi-code-tags"
+        flat
+        round
       >
-        code
-      </button>
-      <button @click="editor.chain().focus().unsetAllMarks().run()">
-        clear marks
-      </button>
-      <button @click="editor.chain().focus().clearNodes().run()">
-        clear nodes
-      </button>
-      <button
+      </q-btn>
+      <q-btn
+        @click="editor.chain().focus().unsetAllMarks().run()"
+        icon="mdi-format-clear"
+        flat
+        round
+      >
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().setParagraph().run()"
         :class="{ 'is-active': editor.isActive('paragraph') }"
+        icon="mdi-format-paragraph"
+        flat
+        round
       >
-        paragraph
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+        icon="mdi-format-header-1"
+        flat
+        round
       >
-        h1
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+        icon="mdi-format-header-2"
+        flat
+        round
       >
-        h2
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
+        icon="mdi-format-header-3"
+        flat
+        round
       >
-        h3
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
+        icon="mdi-format-header-4"
+        flat
+        round
       >
-        h4
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
+        icon="mdi-format-header-5"
+        flat
+        round
       >
-        h5
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
+        icon="mdi-format-header-6"
+        flat
+        round
       >
-        h6
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleBulletList().run()"
         :class="{ 'is-active': editor.isActive('bulletList') }"
+        icon="mdi-format-list-bulleted"
+        flat
+        round
       >
-        bullet list
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleOrderedList().run()"
         :class="{ 'is-active': editor.isActive('orderedList') }"
+        icon="mdi-format-list-numbered"
+        flat
+        round
       >
-        ordered list
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleCodeBlock().run()"
         :class="{ 'is-active': editor.isActive('codeBlock') }"
+        icon="mdi-code-braces"
+        flat
+        round
       >
-        code block
-      </button>
-      <button
+      </q-btn>
+      <q-btn
         @click="editor.chain().focus().toggleBlockquote().run()"
         :class="{ 'is-active': editor.isActive('blockquote') }"
+        icon="mdi-format-quote-close-outline"
+        flat
+        round
       >
-        blockquote
-      </button>
-      <button @click="editor.chain().focus().setHorizontalRule().run()">
-        horizontal rule
-      </button>
-      <button @click="editor.chain().focus().setHardBreak().run()">
-        hard break
-      </button>
-      <button @click="editor.chain().focus().undo().run()">undo</button>
-      <button @click="editor.chain().focus().redo().run()">redo</button>
+      </q-btn>
+      <q-btn
+        @click="editor.chain().focus().setHorizontalRule().run()"
+        icon="mdi-minus"
+        flat
+        round
+      >
+      </q-btn>
+      <q-btn
+        @click="editor.chain().focus().setHardBreak().run()"
+        icon="mdi-format-page-break"
+        flat
+        round
+      >
+      </q-btn>
+      <q-btn
+        @click="editor.chain().focus().undo().run()"
+        icon="mdi-undo"
+        flat
+        round
+      >
+      </q-btn>
+      <q-btn
+        @click="editor.chain().focus().redo().run()"
+        icon="mdi-redo"
+        flat
+        round
+      >
+      </q-btn>
     </div>
-    <div class="editor_content">
+
+    <q-separator color="orange"></q-separator>
+
+    <div class="editor_content border">
       <editor-content :editor="editor" />
     </div>
     <div class="editor_footer"></div>
@@ -169,3 +215,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.editor_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
