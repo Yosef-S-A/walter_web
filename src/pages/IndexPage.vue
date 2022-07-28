@@ -2,12 +2,34 @@
   <div>
     <editor v-model:modelValue="content" />
 
-    <div class="content">
-      <h3 class="text-3xl">Content</h3>
-      <pre><code>{{ content }}</code></pre>
-    </div>
+    <div class="q-mx-md">
+      <q-btn
+        label="Add Option"
+        @click="addOption"
+        class="col-10 q-mx-md"
+      ></q-btn>
+      <q-btn-dropdown color="primary" label="Tags">
+        <q-list>
+          <q-item clickable v-close-popup @click="onItemClick">
+            <q-item-section>
+              <q-item-label>Vue</q-item-label>
+            </q-item-section>
+          </q-item>
 
-    <q-btn label="Add Option" @click="addOption"></q-btn>
+          <q-item clickable v-close-popup @click="onItemClick">
+            <q-item-section>
+              <q-item-label>Python</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-close-popup @click="onItemClick">
+            <q-item-section>
+              <q-item-label>Quasar</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
+    </div>
 
     <q-list v-for="(option, index) in options" :key="index">
       <q-item>
@@ -17,18 +39,28 @@
         <q-item-section>
           <editor v-model="option.text" />
         </q-item-section>
-        <q-item-section>
-          <h3 class="text-3xl">Content</h3>
-          <pre><code>{{ option.text }}</code></pre>
-        </q-item-section>
       </q-item>
-      <!-- </div> -->
     </q-list>
+    <div class="q-mx-md">
+      <q-btn
+        class="col-10 q-mx-md"
+        :class="options.length < 2 ? 'disabled' : ''"
+        color="deep-orange"
+        push
+        icon="mdi-content-save"
+        label="Save"
+        @click="submit_data"
+        type="submit"
+        :loading="submitting"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import Editor from "../components/EditorComponent.vue";
+import axios from "axios";
+
 let EMPTY_OBJECT = {
   type: "doc",
   content: [

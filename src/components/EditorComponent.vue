@@ -1,5 +1,5 @@
 <template>
-  <div class="col-10 q-pa-md q-mx-md editor_div">
+  <div class="col-10 q-pa-md q-mx-md">
     <div class="editor_header" v-if="editor">
       <q-btn
         @click="editor.chain().focus().toggleBold().run()"
