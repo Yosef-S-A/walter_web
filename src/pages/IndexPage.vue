@@ -1,6 +1,6 @@
 <template>
   <div>
-    <editor v-model="content" />
+    <editor v-model:modelValue="content" />
 
     <div class="content">
       <h3 class="text-3xl">Content</h3>
@@ -11,6 +11,14 @@
 
 <script>
 import Editor from "../components/EditorComponent.vue";
+let EMPTY_OBJECT = {
+  type: "doc",
+  content: [
+    {
+      type: "paragraph",
+    },
+  ],
+};
 
 export default {
   components: {
@@ -18,7 +26,7 @@ export default {
   },
   data() {
     return {
-      content: "",
+      content: EMPTY_OBJECT,
     };
   },
 };

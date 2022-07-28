@@ -157,7 +157,7 @@
       </q-btn>
       <q-btn
         @click="editor.chain().focus().clearContent().run()"
-        icon="mdi-backspace"
+        icon="mdi-delete-outline"
         flat
         round
         style="color: red"
@@ -175,15 +175,26 @@
 <script>
 import StarterKit from "@tiptap/starter-kit";
 // eslint-disable-next-line
-import { Editor, EditorContent } from "@tiptap/vue-3";
+import { Editor, EditorContent, VueNodeViewRenderer } from "@tiptap/vue-3";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { lowlight } from "lowlight";
+import CodeBlockComponent from "./CodeBlockComponent.vue";
+let EMPTY_OBJECT = {
+  type: "doc",
+  content: [
+    {
+      type: "paragraph",
+    },
+  ],
+};
 export default {
   components: {
     EditorContent,
   },
   props: {
     modelValue: {
-      type: String,
-      default: "",
+      type: Object,
+      default: EMPTY_OBJECT,
     },
   },
   emits: ["update:modelValue"],
@@ -195,9 +206,10 @@ export default {
   watch: {
     modelValue(value) {
       // HTML
-      const isSame = this.editor.getHTML() === value;
+      // const isSame = this.editor.getHTML() === value;
       // JSON
-      // const isSame = JSON.stringify(this.editor.getJSON()) === JSON.stringify(value)
+      const isSame =
+        JSON.stringify(this.editor.getJSON()) === JSON.stringify(value);
       if (isSame) {
         return;
       }
@@ -206,13 +218,24 @@ export default {
   },
   mounted() {
     this.editor = new Editor({
-      extensions: [StarterKit],
+      extensions: [
+        StarterKit.configure({
+          codeBlock: false,
+        }),
+        CodeBlockLowlight.extend({
+          addNodeView() {
+            return VueNodeViewRenderer(CodeBlockComponent);
+          },
+        }).configure({
+          lowlight,
+        }),
+      ],
       content: this.modelValue,
       onUpdate: () => {
         // HTML
-        this.$emit("update:modelValue", this.editor.getHTML());
+        // this.$emit("update:modelValue", this.editor.getHTML());
         // JSON
-        // this.$emit('update:modelValue', this.editor.getJSON())
+        this.$emit("update:modelValue", this.editor.getJSON());
       },
     });
   },
@@ -222,28 +245,125 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+/* Basic editor styles */
 .editor_header {
   background-color: #c4c4c4;
 }
 .ProseMirror {
-  border: solid 1px #eeeeee;
-  border-radius: 0 0 6px 6px;
-  height: 350px;
-  padding: 0.75rem;
+  outline: none;
+  border: solid 1.5px #b3b3b3;
+  min-height: 80px;
+  padding: 0.5em;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-code {
-  display: inline-block;
-  white-space: pre-wrap;
-  font-size: 0.8rem;
-  padding: 0.5em 0.5em;
-  background-color: #e9ecef;
-  color: red;
-  font-family: "Courier New", Courier, monospace;
-}
-pre code {
-  border-radius: 5px;
-  color: #333;
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  ul,
+  ol {
+    padding: 0 1rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1);
+    white-space: pre-wrap;
+    font-size: 0.8rem;
+    padding: 0.5em 0.5em;
+    background-color: #e4e4e4;
+    color: red;
+    font-family: "Courier New", Courier, monospace;
+  }
+
+  pre {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: "JetBrainsMono", monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    code {
+      color: inherit;
+      padding: 0.5em;
+      background: none;
+      font-size: 0.8rem;
+    }
+    .hljs-comment,
+    .hljs-quote {
+      color: #616161;
+    }
+
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-attribute,
+    .hljs-tag,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-link,
+    .hljs-name,
+    .hljs-selector-id,
+    .hljs-selector-class {
+      color: #f98181;
+    }
+
+    .hljs-number,
+    .hljs-meta,
+    .hljs-built_in,
+    .hljs-builtin-name,
+    .hljs-literal,
+    .hljs-type,
+    .hljs-params {
+      color: #fbbc88;
+    }
+
+    .hljs-string,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: #b9f18d;
+    }
+
+    .hljs-title,
+    .hljs-section {
+      color: #faf594;
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #70cff8;
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: 700;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(#0d0d0d, 0.1);
+  }
+
+  hr {
+    border: none;
+    border-top: 2px solid rgba(#0d0d0d, 0.1);
+    margin: 2rem 0;
+  }
 }
 </style>
