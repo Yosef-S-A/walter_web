@@ -247,6 +247,15 @@ export default {
 
 <style lang="scss">
 /* Basic editor styles */
+#q-app
+  > div
+  > div.q-page-container
+  > div
+  > div:nth-child(n)
+  > div
+  > div.q-item__section.column.q-item__section--main.justify-center {
+  height: 100%;
+}
 .editor_header {
   background-color: #c4c4c4;
 }
